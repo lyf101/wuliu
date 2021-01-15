@@ -36,7 +36,7 @@ public class LoginRegisterService {
     public int addStaff(String username, String password, String realName, String idCard, int classify) {
         Staff staff = new Staff();
         Date date = new Date();
-        SimpleDateFormat f = new SimpleDateFormat("yy-MM-dd");
+        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
         String nowDate = f.format(date);
         staff.setStaffId(UUID.randomUUID().toString());
         staff.setStaffUsername(username);
