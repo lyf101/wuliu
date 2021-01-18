@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link type="text/css" rel="stylesheet" href="css/style.css"/>
+    <script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="js/menu.js"></script>
+</head>
+<body>
+<div id="header">
+    <div class="logo">快便捷物流后台管理系统</div>
+    <div class="navigation">
+        <ul>
+            <li>欢迎您！</li>
+            <li><a href=""><span th:text="${session.staff.getStaffUsername()}"></span></a></li>
+            <li><a th:href="@{/toChangePasswordView(staffUsername=${staff.getStaffUsername()})}">修改密码</a></li>
+            <li><a href="/loginView">退出</a></li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

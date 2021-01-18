@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -17,18 +18,34 @@ public class LoginRegisterService {
 
     //根据用户名查询用户名是否存在
     public boolean isExistStaffByUsername(String username) {
-        Staff staff = loginRegisterMapper.findStaffByUsername(username);
-        if (staff == null) {
+        List<Staff> staff = loginRegisterMapper.findStaffByUsername(username);
+        if (staff.size() == 0) {
             return false;
         } else return true;
     }
 
+
     //根据用户名和密码验证用户密码是否正确
     public boolean isExisStaffByUsernamePassword(String username, String password) {
-        Staff staffByUsernamePassword = loginRegisterMapper.findStaffByUsernamePassword(username, password);
-        if (staffByUsernamePassword == null) {
+        List<Staff> staffByUsernamePassword = loginRegisterMapper.findStaffByUsernamePassword(username, password);
+        if (staffByUsernamePassword.size() == 0) {
             return false;
-        }else return true;
+        } else return true;
+    }
+
+    //根据用户名查找用户
+    public Staff findStaffByUsername(String username) {
+        List<Staff> staffByUsername = loginRegisterMapper.findStaffByUsername(username);
+        Staff staff = staffByUsername.get(0);
+        return staff;
+    }
+
+    //修改用户
+    public boolean changeStaff(String username,String password){
+        int i = loginRegisterMapper.changeStaffPassword(username,password);
+        if(i>0){
+            return true;
+        }else return false;
     }
 
 

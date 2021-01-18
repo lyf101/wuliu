@@ -7,6 +7,14 @@
     <link th:href="@{/css/bootstrap.css}" rel="stylesheet">
     <link th:href="@{/css/signin.css}" rel="stylesheet">
     <script>
+
+        /*getVerify($("#getVerify"));
+
+        //获取验证码
+        function getVerify(obj){
+            obj.src = "/getVerify?"+Math.random();
+        }*/
+
         function toRegister() {
             window.location.href = "registerView"
         }
@@ -18,17 +26,20 @@
     <img class="mb-4" th:src="@{/img/login.jpg}" width="100" height="100">
     <h1 class="h3 mb-3 font-weight-normal">请登录</h1>
     <input type="hidden" value="111">
-    <input type="text" class="form-control" th:placeholder="用户名" required="" autofocus="" name="username">
+
+    <input type="text" class="form-control"
+           th:placeholder="用户名" required="" autofocus="" name="username">
     <input type="password" class="form-control"
-           th:placeholder="密码" required=""  name="password">
+           th:placeholder="密码" required="" name="password">
+
 
     <div class="mb-3">
-       <!-- <span th:if="${notExistUser} != ''" style="color: red;">账号或密码有误</span>-->
-
+        <!-- <span th:if="${notExistUser} != ''" style="color: red;">账号或密码有误</span>-->
+        <span style="color: red" th:text="${msg}"></span>
     </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+    <button class="btn btn-lg btn-primary btn-block" type="button" onclick="toRegister()">注册</button>
 
-    <button class="btn btn-lg btn-primary btn-block" type="submit" >登录</button>
-    <button class="btn btn-lg btn-primary btn-block" type="button"  onclick="toRegister()">注册</button>
 
 </form>
 </body>

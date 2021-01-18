@@ -1,17 +1,33 @@
 package cn.lfy.lw.controller;
 
+import cn.lfy.lw.domain.Staff;
 import cn.lfy.lw.service.LoginRegisterService;
+import org.apache.catalina.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class LoginRegisterController {
 
     @Autowired
     private LoginRegisterService loginRegisterService;
+
+    @RequestMapping("/loginView")
+    public String toLogin() {
+
+        return "login.html";
+    }
+
+    @RequestMapping("/registerView")
+    public String toRegister() {
+        return "register.html";
+    }
 
 
     //注册
@@ -22,6 +38,7 @@ public class LoginRegisterController {
                            @RequestParam("realName") String realName,
                            @RequestParam("idCard") String idCard,
                            @RequestParam("classify") String classify,
+                           @RequestParam("code")String code,
                            Model model) {
 
         model.addAttribute("msg", "");
@@ -31,8 +48,8 @@ public class LoginRegisterController {
         }
 
 
-        if(classify.equals("")||idCard.equals("")||realName.equals("") ||rePassword.equals("")||password.equals("")||username.equals("")){
-            model.addAttribute("msg","信息不能为空");
+        if (classify.equals("") || idCard.equals("") || realName.equals("") || rePassword.equals("") || password.equals("") || username.equals("")) {
+            model.addAttribute("msg", "信息不能为空");
             return "register.html";
         }
 
@@ -57,19 +74,20 @@ public class LoginRegisterController {
     @RequestMapping("/LoginController")
     public String login(@RequestParam("username") String username,
                         @RequestParam("password") String password,
-                        Model model) {
+                        Model model,
+                        HttpSession session) {
 
-        model.addAttribute("msg","");
-
-        if(username.equals("")||password.equals("")){
-            model.addAttribute("msg","用户名或密码不能为空");
-            return "login.html";
-        }
+        model.addAttribute("msg", "");
 
         boolean exisStaffByUsernamePassword = loginRegisterService.isExisStaffByUsernamePassword(username, password);
-        if (!exisStaffByUsernamePassword){
-            model.addAttribute("msg","用户名或密码错误");
+        if (!exisStaffByUsernamePassword) {
+            model.addAttribute("msg", "用户名或密码错误");
             return "login.html";
+        } else {
+
+            Staff staff = loginRegisterService.findStaffByUsername(username);
+            session.setAttribute("staff", staff);
+            return "index.html";
         }
 
 
